@@ -1,0 +1,21 @@
+sudo: required
+language: java
+service: mysql
+before_install:
+- sudo apt-get update -qq
+- sudo apt-get install maven openjdk-8-jre -y
+before_script:
+  - sudo mysql -e "use mysql; update user set authentication_string=PASSWORD('hellokoding') where User='root'; update user set plugin='mysql_native_password';FLUSH PRIVILEGES;"
+  - sudo service mysql restart 
+script:
+  - mvn package
+  - mvn jetty:run&
+deploy:
+  provider: heroku
+  api_key:
+    secure: VVudYZBIqwj2zVOWOAlP2dXpWqkAzufsrZUEWTK31J9JMTV2TFFvN7EOaM/LvFQHFBqn6iLy8DhxS8jQyENdmZuDuw1gKVGIecCXwWMs8OiX9ZVvDiAoxJKyWJNNbbT33tjEfc2AjCXSbqQBF21ya42D01hqyunFDby6omjl/j9RWd/TSpCkF66UXg7BkVSdRCNhr6UYsV4OsAoiWbkqmFUegJkI2BY04+azmXzMtS/vy18oywuw5bKHVMS4bH5VE/LLuXzO1zsSDw9k/Jo+LlCqwr94nbXn442mHVx9hhfJCWRkCm7Te6GPFKr/AOeh7jwvE0QvA656kskzUwQzNDr8KQJHS5GMIf698Za8QEUJl8WVzHBwsWSWBKjE8+mS9OReO7cZU4WVvKkMTRO56VjysZ9mvKFPf1xYKuTQoRFSuivVc4lUxmvLzzgSaW7sEsroDlXm+oDJj9ak/EyTZ9a0n6pp6PVbESgZ+vebyuHN4kJSBHJZyY1mJmsSrCoPRUfnCA4CJB5ayk202WEID5TsOMxnYvj/cTYrquVLpQUYwn4ymE+U6YwzVkY2j+4k5zXXzXJrEOrWla8tWI0y7oY7Nb9g/VkYPvuQEY9d3wpqA6kYhNFMh+gxkw2MfZNZoC/JEhoBEGkWHjBnPx2+LFcViJkum8iRAs+wEarJ2to=
+  app: sinauloginmaven
+  run: 
+    - mvn jetty:run --port $PORT
+notifications:
+  webhooks: https://fathomless-fjord-24024.herokuapp.com/notify
