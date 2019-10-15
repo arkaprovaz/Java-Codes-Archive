@@ -5,7 +5,7 @@ class Prime {
 
         for (i=2;i<=100;i++) {
             c=0;
-            for (j=2;j<=i/2;j++)
+            for (j=2;j<=Math.ceil(Math.sqrt(n));j++)
                 if (i%j==0)
                     c++;
             if (c==0)
