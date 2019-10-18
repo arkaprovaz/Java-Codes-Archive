@@ -1,0 +1,52 @@
+import java.io.*;
+class matmult
+{
+    void input(int a[][],int n)throws IOException
+    {
+        BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+        for(int i=0;i<n;i++)
+        {
+            for(int j=0;j<n;j++)
+            {
+                a[i][j] = Integer.parseInt(in.readLine());
+            }
+        }
+    }
+	public static void main (String[] args) throws IOException
+	{
+		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		System.out.println("please enter the size of the n*n array");
+		int n = Integer.parseInt(in.readLine());//to accept sixe of n*n matrix
+		matmult ob = new matmult();
+		int a[][] = new int[n][n];
+		int b[][] = new int[n][n];
+		System.out.println("enter for first array");
+		ob.input(a,n);//calling the function input to acccept inputs
+		System.out.println("enter for second array");
+		ob.input(b,n);
+		int c[][] = new int[n][n];//new array which stores after multiplication values
+		for(int i=0;i<n;i++)
+		{
+		    for(int j=0;j<n;j++)
+		    c[i][j] = 0;
+		}
+		for(int i=0;i<n;i++)
+		{
+		    for(int j=0;j<n;j++)
+		    {
+		        for(int k=0;k<n;k++)
+		        {
+		            c[i][j]+= a[i][k]*b[k][j];//for c[0][0]= a[row][all columns] * b[column][all rows]
+		        }
+		    }
+		}
+		for(int i=0;i<n;i++)
+		{
+		    for(int j=0;j<n;j++)
+		    {
+		        System.out.print(c[i][j]);
+		    }
+		    System.out.println();
+		}
+	}
+}
